@@ -36,6 +36,7 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1.5px solid rgba(244, 63, 94, 0.35);
             box-shadow: 0 0 35px rgba(225, 29, 72, 0.3);
+            will-change: transform;
         }
 
         /* Maximized puzzle grid container */
@@ -63,14 +64,16 @@
         /* Grayscale Filter for Unmatched Tiles */
         .tile-grayscale {
             filter: grayscale(100%) contrast(105%) brightness(85%);
-            transition: filter 0.4s ease-in-out, transform 0.15s ease;
+            transition: filter 0.3s ease-out, transform 0.12s ease-out;
+            will-change: filter, transform;
         }
 
         /* Vibrant Color Filter for Correct Position Tiles */
         .tile-color {
             filter: grayscale(0%) contrast(100%) brightness(100%);
-            transition: filter 0.4s ease-in-out, transform 0.15s ease;
-            box-shadow: inset 0 0 12px rgba(244, 63, 94, 0.3);
+            transition: filter 0.3s ease-out, transform 0.12s ease-out;
+            box-shadow: inset 0 0 12px rgba(244, 63, 94, 0.35);
+            will-change: filter, transform;
         }
 
         .heart-btn {
@@ -100,8 +103,8 @@
         <h1 class="text-xl sm:text-3xl font-extrabold tracking-wide text-rose-300 glow-title flex items-center justify-center gap-2">
             <span>💖</span> ভালোবাসার ছোঁয়া <span>💖</span>
         </h1>
-        <p class="text-xs sm:text-sm text-rose-200/90 italic mt-1 font-semibold px-2 leading-snug min-h-[32px] flex items-center justify-center text-center transition-all duration-300" id="quote-text">
-            "সঠিক জায়গায় মেলালেই ছোঁয়া পাবে রঙের... 💖"
+        <p class="text-xs sm:text-sm text-rose-200/90 italic mt-1 font-semibold px-2 leading-snug min-h-[36px] flex items-center justify-center text-center transition-all duration-300" id="quote-text">
+            "আস্তে আস্তে মেলাও... পর্দা সরতে দাও। 💖"
         </p>
     </header>
 
@@ -151,15 +154,15 @@
         </div>
     </footer>
 
-    <!-- Interactive Script -->
+    <!-- Optimized Interactive Engine Script -->
     <script>
         const gridEl = document.getElementById('puzzleGrid');
         const fxCanvas = document.getElementById('fxCanvas');
-        const fxCtx = fxCanvas.getContext('2d');
+        const fxCtx = fxCanvas.getContext('2d', { alpha: true });
         const winModal = document.getElementById('win-modal');
         const quoteEl = document.getElementById('quote-text');
         const bgParticleCanvas = document.getElementById('bgParticleCanvas');
-        const bgCtx = bgParticleCanvas.getContext('2d');
+        const bgCtx = bgParticleCanvas.getContext('2d', { alpha: true });
 
         const gridSize = 3;
         const totalTiles = gridSize * gridSize;
@@ -175,35 +178,64 @@
             {
                 src: 'images/puzzle1.jpg',
                 title: 'পাপড়ি ১ - মিষ্টি শুরু',
-                quote: '"সঠিক টুকরো মেলালেই পাবে মিষ্টি রঙ... 💖"',
-                winMsg: '"উফ! সব রঙেই তুমি আমায় রাঙিয়ে দিলে... ❤️"'
+                captions: [
+                    '"আস্তে আস্তে ছুঁয়ে দাও... পর্দা সরতে দাও। 💖"',
+                    '"আহা, প্রথম আলো ফুটে উঠছে! আরেকটু কাছে আসো... 💕"',
+                    '"উত্তাপ কিছুটা বেড়েছে... আরও গভীরভাবে দেখো! 🔥"',
+                    '"উফ, পাগল করা স্পর্শ! শরীর জুড়ে শিহরণ... 💋"',
+                    '"কতটা ব্যাকুল তুমি? আর একটুখানি বাকি... 🌹"',
+                    '"সবটুকু উঁকি মারছে... এখন শুধু উপভোগ করার পালা! ❤️"'
+                ]
             },
             {
                 src: 'images/puzzle2.jpg',
                 title: 'পাপড়ি ২ - গভীর অনুরাগ',
-                quote: '"তোমার পরশে সাদা-কালো রূপ নিক রঙিন স্বপ্নে... 💕"',
-                winMsg: '"একদম পারফেক্ট! রঙিন অনুরাগে ভরিয়ে দাও... 🔥"'
+                captions: [
+                    '"তোমার ওই পাগল করা চাহনিতে হারিয়ে যেতে চাই... 💕"',
+                    '"সাদা-কালো সরিয়ে ভালোবাসার রঙ ছড়িয়ে দাও... ✨"',
+                    '"আহ্, তোমার হাতের ছোঁয়া বড্ড মিষ্টি... 🔥"',
+                    '"নিঃশ্বাস ঘন হয়ে আসছে... থামবে না কিন্তু! 💋"',
+                    '"একদম কাছে চলে এসেছো, আর এক ধাক্কায় মেলাও! 🌹"',
+                    '"আহা! একদম পারফেক্ট... অনুরাগের চরম শিখরে! ❤️"'
+                ]
             },
             {
                 src: 'images/puzzle3.jpg',
                 title: 'পাপড়ি ৩ - ভালোবাসার চরম মুহূর্ত',
-                quote: '"আর একটুখানি... সবকটি টুকরো রঙিন করে তোলো! 🌹"',
-                winMsg: '"রঙের খেলায় তুমি জয়ী! এবার শুধুই আমাদের সময়... ✨"'
+                captions: [
+                    '"আমার প্রতিটা নিঃশ্বাসে শুধুই তোমার নাম... 🌹"',
+                    '"উত্তাপ এখন চরম সীমায়! রঙিন করো প্রতিটি ইঞ্চি... 🔥"',
+                    '"উফ! তোমার এই ব্যাকুলতা আমায় পাগল করে দিচ্ছে... 💋"',
+                    '"আর চেপে রাখা যাচ্ছে না... সবটুকু উন্মুক্ত করো! ✨"',
+                    '"খুব কাছে... একদম শেষ মুহূর্তে এসে গেছো! 💖"',
+                    '"রঙের খেলায় তুমি জয়ী! এবার শুধুই আমাদের রাত... ❤️"'
+                ]
             }
         ];
 
         let loadedImageCanvas = null;
 
-        // Audio Synthesizer
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        // Optimized Audio Context management
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
         function playSound(freq, duration, type = 'sine') {
-            if (soundMuted || !audioCtx) return;
+            if (soundMuted) return;
+            initAudio();
             try {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = type;
                 osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
@@ -222,13 +254,29 @@
             }
         }
 
+        // Progressive Erotic Caption Update based on Correct Match Count
+        function updateProgressCaption() {
+            let matches = 0;
+            tileState.forEach((val, idx) => {
+                if (val === idx) matches++;
+            });
+
+            const currentLevelData = levels[currentLevelIndex];
+            const totalCaptions = currentLevelData.captions.length;
+            
+            // Map 0 to 9 matches into caption index range
+            let captionIndex = Math.floor((matches / totalTiles) * (totalCaptions - 1));
+            captionIndex = Math.min(Math.max(captionIndex, 0), totalCaptions - 1);
+
+            quoteEl.innerText = currentLevelData.captions[captionIndex];
+        }
+
         function loadLevel(index) {
             currentLevelIndex = index;
             isWon = false;
             selectedTileIndex = null;
             winModal.classList.remove('scale-up');
             winModal.classList.add('scale-down');
-            quoteEl.innerText = levels[currentLevelIndex].quote;
 
             const img = new Image();
             img.crossOrigin = "anonymous";
@@ -268,7 +316,7 @@
 
                 fCtx.fillStyle = '#ffffff';
                 fCtx.font = 'bold 36px sans-serif';
-                wrapText(fCtx, levels[currentLevelIndex].winMsg, 450, 600, 720, 50);
+                wrapText(fCtx, levels[currentLevelIndex].captions[5], 450, 600, 720, 50);
 
                 const fallbackImg = new Image();
                 fallbackImg.src = fallbackCanvas.toDataURL();
@@ -326,6 +374,7 @@
 
             resizeFxCanvas();
             renderGrid();
+            updateProgressCaption();
         }
 
         function resizeFxCanvas() {
@@ -343,7 +392,7 @@
                 const isCorrect = (originalIndex === currentPos);
 
                 tileDiv.dataset.pos = currentPos;
-                tileDiv.className = `relative w-full h-full rounded-md sm:rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${
+                tileDiv.className = `relative w-full h-full rounded-md sm:rounded-lg overflow-hidden cursor-pointer ${
                     isCorrect ? 'tile-color border border-rose-400/40' : 'tile-grayscale border border-white/10'
                 } ${selectedTileIndex === currentPos ? 'tile-selected' : ''}`;
 
@@ -385,7 +434,7 @@
                 const pos1 = selectedTileIndex;
                 const pos2 = clickedPos;
 
-                // Instant Swap without delay
+                // Instant Swap
                 [tileState[pos1], tileState[pos2]] = [tileState[pos2], tileState[pos1]];
                 selectedTileIndex = null;
 
@@ -396,13 +445,14 @@
                 if (tileState[pos1] === pos1) triggerLoveParticles(pos1);
                 if (tileState[pos2] === pos2) triggerLoveParticles(pos2);
 
+                updateProgressCaption();
                 checkWin();
             }
         }
 
         // Trigger Love Heart Burst FX at specific tile index
         function triggerLoveParticles(tileIndex) {
-            playSound(880, 0.15, 'sine');
+            playSound(880, 0.12, 'sine');
 
             const col = tileIndex % gridSize;
             const row = Math.floor(tileIndex / gridSize);
@@ -412,15 +462,15 @@
             const centerX = col * cellW + cellW / 2;
             const centerY = row * cellH + cellH / 2;
 
-            for (let i = 0; i < 16; i++) {
+            for (let i = 0; i < 14; i++) {
                 const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 4 + 2;
+                const speed = Math.random() * 3.5 + 1.8;
                 loveParticles.push({
                     x: centerX,
                     y: centerY,
-                    size: Math.random() * 12 + 8,
+                    size: Math.random() * 10 + 7,
                     speedX: Math.cos(angle) * speed,
-                    speedY: Math.sin(angle) * speed - 1,
+                    speedY: Math.sin(angle) * speed - 0.8,
                     opacity: 1,
                     color: Math.random() > 0.3 ? '#f43f5e' : '#ff85a1'
                 });
@@ -428,20 +478,24 @@
         }
 
         function animateLoveParticles() {
-            fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+            if (loveParticles.length > 0) {
+                fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
 
-            for (let i = loveParticles.length - 1; i >= 0; i--) {
-                const p = loveParticles[i];
-                p.x += p.speedX;
-                p.y += p.speedY;
-                p.opacity -= 0.025;
+                for (let i = loveParticles.length - 1; i >= 0; i--) {
+                    const p = loveParticles[i];
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    p.opacity -= 0.03;
 
-                if (p.opacity <= 0) {
-                    loveParticles.splice(i, 1);
-                    continue;
+                    if (p.opacity <= 0) {
+                        loveParticles.splice(i, 1);
+                        continue;
+                    }
+
+                    drawHeartShape(fxCtx, p.x, p.y, p.size, p.color, p.opacity);
                 }
-
-                drawHeartShape(fxCtx, p.x, p.y, p.size, p.color, p.opacity);
+            } else {
+                fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
             }
 
             requestAnimationFrame(animateLoveParticles);
@@ -451,7 +505,7 @@
             const isCorrect = tileState.every((val, index) => val === index);
             if (isCorrect) {
                 isWon = true;
-                quoteEl.innerText = levels[currentLevelIndex].winMsg;
+                quoteEl.innerText = levels[currentLevelIndex].captions[5];
                 
                 playSound(523.25, 0.15);
                 setTimeout(() => playSound(659.25, 0.15), 150);
@@ -474,6 +528,7 @@
             setTimeout(() => {
                 tileState = tempState;
                 renderGrid();
+                updateProgressCaption();
             }, 1200);
         }
 
@@ -487,21 +542,21 @@
             selectLevel(nextIdx);
         }
 
-        /* Ambient Floating Heart Background Animation */
+        /* Optimized Ambient Floating Heart Background Animation */
         function initBgParticles() {
             bgParticleCanvas.width = window.innerWidth;
             bgParticleCanvas.height = window.innerHeight;
             bgParticles = [];
-            const count = Math.min(Math.floor(window.innerWidth / 18), 35);
+            const count = Math.min(Math.floor(window.innerWidth / 22), 25);
 
             for (let i = 0; i < count; i++) {
                 bgParticles.push({
                     x: Math.random() * bgParticleCanvas.width,
                     y: Math.random() * bgParticleCanvas.height,
-                    size: Math.random() * 8 + 4,
-                    speedY: Math.random() * 0.6 + 0.2,
-                    speedX: (Math.random() - 0.5) * 0.4,
-                    opacity: Math.random() * 0.5 + 0.2,
+                    size: Math.random() * 7 + 4,
+                    speedY: Math.random() * 0.5 + 0.2,
+                    speedX: (Math.random() - 0.5) * 0.3,
+                    opacity: Math.random() * 0.4 + 0.2,
                     color: Math.random() > 0.5 ? '#f43f5e' : '#fda4af'
                 });
             }
